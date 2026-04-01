@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, GitFork } from 'lucide-react';
 import type { Project, Lang } from '../../lib/types';
 
 interface ProjectCardProps {
@@ -85,7 +85,7 @@ export default function ProjectCard({ project, lang, index }: ProjectCardProps) 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-medium text-accent hover:text-accent-violet transition-colors"
               >
-                <Github size={13} /> Code
+                <GitFork size={13} /> Code
               </a>
             )}
           </div>

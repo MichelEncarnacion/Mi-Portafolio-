@@ -2,6 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import { supabaseServer } from '../lib/supabase-server';
 
+import Navbar from '../components/layout/Navbar';
+import Hero from '../components/sections/Hero';
+import Projects from '../components/sections/Projects';
+import Skills from '../components/sections/Skills';
+import Experience from '../components/sections/Experience';
+import Contact from '../components/sections/Contact';
+import Footer from '../components/layout/Footer';
+
 const { data: heroData } = await supabaseServer
   .from('hero_content')
   .select('*')
@@ -39,35 +47,11 @@ const { data: contactInfo } = await supabaseServer
 ---
 
 <Layout>
-  <main class="min-h-screen flex items-center justify-center p-8">
-    <div class="text-center max-w-2xl">
-      <h1 class="text-6xl font-heading font-bold bg-gradient-to-r from-accent to-accent-violet bg-clip-text text-transparent">
-        {heroData?.name ?? 'Michel Encarnación'}
-      </h1>
-      <p class="mt-4 text-xl text-text-secondary">
-        {heroData?.tagline_en ?? 'Software Engineering Student & Full-Stack Developer'}
-      </p>
-      <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-text-secondary">
-        <div class="p-4 rounded-2xl border border-border dark:border-border-dark">
-          <p class="text-3xl font-bold text-accent">{projects?.length ?? 0}</p>
-          <p>Projects</p>
-        </div>
-        <div class="p-4 rounded-2xl border border-border dark:border-border-dark">
-          <p class="text-3xl font-bold text-accent">{skills?.length ?? 0}</p>
-          <p>Skills</p>
-        </div>
-        <div class="p-4 rounded-2xl border border-border dark:border-border-dark">
-          <p class="text-3xl font-bold text-accent">{experience?.length ?? 0}</p>
-          <p>Experience</p>
-        </div>
-        <div class="p-4 rounded-2xl border border-border dark:border-border-dark">
-          <p class="text-3xl font-bold text-accent">{certifications?.length ?? 0}</p>
-          <p>Certs</p>
-        </div>
-      </div>
-      <p class="mt-8 text-xs text-text-secondary opacity-50">
-        Phase 1 complete — full UI coming in Phase 2
-      </p>
-    </div>
-  </main>
+  <Navbar client:only="react" />
+  <Hero client:only="react" data={heroData} />
+  <Projects client:visible data={projects} />
+  <Skills client:visible skills={skills} certifications={certifications} />
+  <Experience client:visible data={experience} />
+  <Contact client:visible contactInfo={contactInfo} />
+  <Footer client:only="react" />
 </Layout>

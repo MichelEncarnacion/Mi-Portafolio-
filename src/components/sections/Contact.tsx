@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Mail, Phone, Linkedin, Github, CheckCircle, AlertCircle } from 'lucide-react';
+import { Send, Mail, Phone, Link, GitFork, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
 import ScrollReveal from '../ui/ScrollReveal';
 import type { ContactInfo } from '../../lib/types';
@@ -138,7 +138,7 @@ export default function Contact({ contactInfo }: ContactProps) {
                   className="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors group"
                 >
                   <div className="p-2.5 rounded-xl bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                    <Linkedin size={18} className="text-accent" />
+                    <Link size={18} className="text-accent" />
                   </div>
                   <span className="text-sm">LinkedIn</span>
                 </a>
@@ -151,7 +151,7 @@ export default function Contact({ contactInfo }: ContactProps) {
                   className="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors group"
                 >
                   <div className="p-2.5 rounded-xl bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                    <Github size={18} className="text-accent" />
+                    <GitFork size={18} className="text-accent" />
                   </div>
                   <span className="text-sm">GitHub</span>
                 </a>
