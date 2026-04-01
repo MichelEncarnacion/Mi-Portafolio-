@@ -1,8 +1,73 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { supabaseServer } from '../lib/supabase-server';
+
+const { data: heroData } = await supabaseServer
+  .from('hero_content')
+  .select('*')
+  .eq('status', 'published')
+  .single();
+
+const { data: projects } = await supabaseServer
+  .from('projects')
+  .select('*')
+  .eq('status', 'published')
+  .order('sort_order');
+
+const { data: skills } = await supabaseServer
+  .from('skills')
+  .select('*')
+  .eq('status', 'published')
+  .order('sort_order');
+
+const { data: certifications } = await supabaseServer
+  .from('certifications')
+  .select('*')
+  .eq('status', 'published')
+  .order('sort_order');
+
+const { data: experience } = await supabaseServer
+  .from('experience')
+  .select('*')
+  .eq('status', 'published')
+  .order('sort_order');
+
+const { data: contactInfo } = await supabaseServer
+  .from('contact_info')
+  .select('*')
+  .single();
 ---
+
 <Layout>
-  <main class="min-h-screen flex items-center justify-center">
-    <h1 class="text-5xl font-heading font-bold text-accent">Michel Encarnación</h1>
+  <main class="min-h-screen flex items-center justify-center p-8">
+    <div class="text-center max-w-2xl">
+      <h1 class="text-6xl font-heading font-bold bg-gradient-to-r from-accent to-accent-violet bg-clip-text text-transparent">
+        {heroData?.name ?? 'Michel Encarnación'}
+      </h1>
+      <p class="mt-4 text-xl text-text-secondary">
+        {heroData?.tagline_en ?? 'Software Engineering Student & Full-Stack Developer'}
+      </p>
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-text-secondary">
+        <div class="p-4 rounded-2xl border border-border dark:border-border-dark">
+          <p class="text-3xl font-bold text-accent">{projects?.length ?? 0}</p>
+          <p>Projects</p>
+        </div>
+        <div class="p-4 rounded-2xl border border-border dark:border-border-dark">
+          <p class="text-3xl font-bold text-accent">{skills?.length ?? 0}</p>
+          <p>Skills</p>
+        </div>
+        <div class="p-4 rounded-2xl border border-border dark:border-border-dark">
+          <p class="text-3xl font-bold text-accent">{experience?.length ?? 0}</p>
+          <p>Experience</p>
+        </div>
+        <div class="p-4 rounded-2xl border border-border dark:border-border-dark">
+          <p class="text-3xl font-bold text-accent">{certifications?.length ?? 0}</p>
+          <p>Certs</p>
+        </div>
+      </div>
+      <p class="mt-8 text-xs text-text-secondary opacity-50">
+        Phase 1 complete — full UI coming in Phase 2
+      </p>
+    </div>
   </main>
 </Layout>
