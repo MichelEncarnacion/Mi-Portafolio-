@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "hero": "Inicio",
+    "projects": "Proyectos",
+    "skills": "Skills",
+    "experience": "Experiencia",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "cta_projects": "Ver Proyectos",
+    "cta_cv": "Descargar CV"
+  },
+  "projects": {
+    "title": "Proyectos Destacados",
+    "view_more": "Ver Más",
+    "in_progress": "En Progreso",
+    "completed": "Completado"
+  },
+  "skills": {
+    "title": "Stack Tecnológico",
+    "languages": "Lenguajes",
+    "frameworks": "Frameworks y Herramientas",
+    "databases": "Bases de Datos y Backend",
+    "other": "Otros",
+    "certifications": "Certificaciones"
+  },
+  "experience": {
+    "title": "Experiencia",
+    "present": "Presente"
+  },
+  "contact": {
+    "title": "Conectemos",
+    "name": "Nombre",
+    "email": "Correo",
+    "message": "Mensaje",
+    "send": "Enviar Mensaje",
+    "success": "¡Mensaje enviado exitosamente!",
+    "error": "Algo salió mal. Intenta de nuevo."
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "built_with": "Hecho con"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "hero_content": "Contenido Hero",
+    "projects": "Proyectos",
+    "skills_certs": "Skills y Certificaciones",
+    "experience": "Experiencia",
+    "media": "Biblioteca de Medios",
+    "contact_info": "Info de Contacto",
+    "resume": "CV/Hoja de Vida",
+    "versions": "Historial de Versiones",
+    "logout": "Cerrar Sesión",
+    "preview": "Vista Previa",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "duplicate": "Duplicar",
+    "new_project": "Nuevo Proyecto",
+    "published": "Publicado",
+    "draft": "Borrador",
+    "login_title": "Inicio de Sesión Admin",
+    "login_email": "Correo",
+    "login_password": "Contraseña",
+    "login_submit": "Iniciar Sesión"
+  }
+}

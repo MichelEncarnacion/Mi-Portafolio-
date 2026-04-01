@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "hero": "Home",
+    "projects": "Projects",
+    "skills": "Skills",
+    "experience": "Experience",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "cta_projects": "View Projects",
+    "cta_cv": "Download CV"
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "view_more": "View More",
+    "in_progress": "In Progress",
+    "completed": "Completed"
+  },
+  "skills": {
+    "title": "Tech Stack",
+    "languages": "Languages",
+    "frameworks": "Frameworks & Tools",
+    "databases": "Databases & Backend",
+    "other": "Other",
+    "certifications": "Certifications"
+  },
+  "experience": {
+    "title": "Experience",
+    "present": "Present"
+  },
+  "contact": {
+    "title": "Let's Connect",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "success": "Message sent successfully!",
+    "error": "Something went wrong. Please try again."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "built_with": "Built with"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "hero_content": "Hero Content",
+    "projects": "Projects",
+    "skills_certs": "Skills & Certifications",
+    "experience": "Experience",
+    "media": "Media Library",
+    "contact_info": "Contact Info",
+    "resume": "Resume/CV",
+    "versions": "Version History",
+    "logout": "Logout",
+    "preview": "Preview Site",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "duplicate": "Duplicate",
+    "new_project": "New Project",
+    "published": "Published",
+    "draft": "Draft",
+    "login_title": "Admin Login",
+    "login_email": "Email",
+    "login_password": "Password",
+    "login_submit": "Sign In"
+  }
+}
