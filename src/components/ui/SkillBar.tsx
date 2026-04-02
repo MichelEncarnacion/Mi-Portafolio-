@@ -15,17 +15,17 @@ export default function SkillBar({ name, proficiency, yearsExperience, delay = 0
   return (
     <div ref={ref} className="space-y-1.5">
       <div className="flex justify-between items-center">
-        <span className="text-sm font-medium">{name}</span>
+        <span className="text-sm font-medium text-neutral-200">{name}</span>
         {yearsExperience && (
-          <span className="text-xs text-text-secondary">{yearsExperience}</span>
+          <span className="text-xs text-neutral-500">{yearsExperience}</span>
         )}
       </div>
-      <div className="h-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+      <div className="h-1.5 rounded-full bg-neutral-800 overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={isInView ? { width: `${proficiency}%` } : { width: 0 }}
           transition={{ duration: 1.2, ease: 'easeOut', delay }}
-          className="h-full rounded-full bg-gradient-to-r from-accent to-accent-violet"
+          className="h-full rounded-full bg-gradient-to-r from-accent to-accent-hover"
         />
       </div>
     </div>
