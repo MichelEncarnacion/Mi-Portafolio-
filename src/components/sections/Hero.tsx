@@ -1,7 +1,33 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, Download, FolderOpen } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useState, useEffect } from 'react';
 import type { HeroContent } from '../../lib/types';
+
+function useTypewriter(text: string, speed = 50, startDelay = 0) {
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    setDisplayed('');
+    setDone(false);
+    let i = 0;
+    const timeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        i++;
+        setDisplayed(text.slice(0, i));
+        if (i >= text.length) {
+          clearInterval(interval);
+          setDone(true);
+        }
+      }, speed);
+      return () => clearInterval(interval);
+    }, startDelay);
+    return () => clearTimeout(timeout);
+  }, [text, speed, startDelay]);
+
+  return { displayed, done };
+}
 
 interface HeroProps {
   data: HeroContent | null;
@@ -18,13 +44,16 @@ export default function Hero({ data }: HeroProps) {
   const description = lang === 'en' ? (data?.description_en ?? '') : (data?.description_es ?? '');
   const name = data?.name ?? 'Michel Encarnación';
 
+  const { displayed: displayedName, done: nameDone } = useTypewriter(name, 55, 300);
+  const { displayed: displayedTagline } = useTypewriter(tagline, 30, nameDone ? 0 : 99999);
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden pt-16">
       {/* Parallax Background blobs */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-accent/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-violet/20 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-accent/10 to-accent-violet/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl" />
       </motion.div>
 
       <motion.div
@@ -44,21 +73,25 @@ export default function Hero({ data }: HeroProps) {
             </motion.p>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-heading font-bold mt-2 bg-gradient-to-r from-accent to-accent-violet bg-clip-text text-transparent leading-tight"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.1, delay: 0.3 }}
+              className="text-5xl sm:text-6xl lg:text-7xl font-heading font-bold mt-2 text-accent leading-tight"
             >
-              {name}
+              {displayedName}
+              <span className="animate-pulse text-accent">█</span>
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.1, delay: 0.4 }}
               className="text-xl sm:text-2xl font-heading font-medium mt-4 text-text-primary dark:text-text-primary-dark"
             >
-              {tagline}
+              {displayedTagline}
+              {nameDone && displayedTagline.length < tagline.length && (
+                <span className="animate-pulse text-accent">█</span>
+              )}
             </motion.p>
 
             <motion.p
@@ -79,7 +112,7 @@ export default function Hero({ data }: HeroProps) {
               <a
                 href="#projects"
                 onClick={(e) => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-accent to-accent-violet text-white font-medium hover:shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-accent text-black font-bold hover:bg-accent-hover hover:shadow-lg hover:shadow-accent/25 hover:scale-105 transition-all duration-300"
               >
                 <FolderOpen size={18} />
                 {t('hero.cta_projects')}
@@ -124,8 +157,8 @@ export default function Hero({ data }: HeroProps) {
                   className="absolute inset-8 rounded-full object-cover"
                 />
               ) : (
-                <div className="absolute inset-8 rounded-full bg-gradient-to-br from-accent to-accent-violet flex items-center justify-center">
-                  <span className="text-5xl font-heading font-bold text-white">ME</span>
+                <div className="absolute inset-8 rounded-full bg-accent flex items-center justify-center">
+                  <span className="text-5xl font-heading font-bold text-black">ME</span>
                 </div>
               )}
             </div>
