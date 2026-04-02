@@ -1,0 +1,6 @@
+---
+export const prerender = false;
+// The login is handled inside AdminApp via AuthGuard
+// This page just redirects to /admin
+return Astro.redirect('/admin');
+---

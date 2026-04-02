@@ -16,10 +16,12 @@ function getNestedValue(obj: Record<string, unknown>, path: string): string {
 }
 
 export function useTranslation() {
-  const [lang, setLang] = useState<Lang>(() => {
-    if (typeof window === 'undefined') return 'en';
-    return (localStorage.getItem('lang') as Lang) || 'en';
-  });
+  const [lang, setLang] = useState<Lang>('en');
+
+  useEffect(() => {
+    const stored = localStorage.getItem('lang') as Lang | null;
+    if (stored && stored !== lang) setLang(stored);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('lang', lang);
