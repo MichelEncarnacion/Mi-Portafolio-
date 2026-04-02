@@ -63,7 +63,7 @@ export default function Hero({ data }: HeroProps) {
         style={{ opacity }}
         className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24"
       >
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text content */}
           <div>
             <motion.p
@@ -144,7 +144,7 @@ export default function Hero({ data }: HeroProps) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex items-center justify-center order-first lg:order-last"
+            className="flex items-center justify-center"
           >
             <div className="relative w-44 h-44 lg:w-72 lg:h-72">
               <motion.div
