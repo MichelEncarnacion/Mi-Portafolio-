@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Página no encontrada | Michel Encarnación">
+  <main class="min-h-screen flex flex-col items-center justify-center bg-bg-primary-dark overflow-hidden relative px-4">
+
+    <!-- Scanlines overlay -->
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- 404 heading -->
+    <div class="text-404" aria-label="Error 404">
+      <span class="digit d1">4</span>
+      <span class="digit d2">0</span>
+      <span class="digit d3">4</span>
+    </div>
+
+    <!-- Pixel art T-Rex -->
+    <div class="dino-wrap" aria-hidden="true">
+      <div class="dino"></div>
+    </div>
+
+    <!-- Message -->
+    <div class="message">
+      <p class="msg-title">El dino se comió esta página</p>
+      <p class="msg-sub">Parece que esta URL no existe... o ya fue devorada.</p>
+      <a href="/" class="btn-home">Volver al inicio</a>
+    </div>
+
+  </main>
+</Layout>
+
+<style>
+  /* ─── Tokens ──────────────────────────────────────── */
+  :root {
+    --green: #4ade80;
+    --green-dark: #16a34a;
+  }
+</style>
