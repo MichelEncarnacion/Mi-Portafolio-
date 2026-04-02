@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { ExternalLink } from 'lucide-react';
 import type { Project, Lang } from '../../lib/types';
 
 interface ProjectCardProps {
@@ -65,9 +66,23 @@ export default function ProjectCard({ project, lang, index, onClick }: ProjectCa
           ))}
         </div>
 
-        <p className="mt-4 text-xs text-neutral-600 font-mono group-hover:text-accent/60 transition-colors">
-          click to expand →
-        </p>
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-xs text-neutral-600 font-mono group-hover:text-accent/60 transition-colors">
+            click to expand →
+          </p>
+          {project.project_url && (
+            <a
+              href={project.project_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1.5 text-xs text-accent/70 hover:text-accent font-mono transition-colors"
+            >
+              <ExternalLink size={12} />
+              live
+            </a>
+          )}
+        </div>
       </div>
     </motion.div>
   );
