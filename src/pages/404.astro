@@ -33,7 +33,7 @@ import Layout from '../layouts/Layout.astro';
 <style>
   /* ─── Scanlines ───────────────────────────────────── */
   .scanlines {
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
@@ -57,7 +57,7 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .digit {
-    font-family: 'Sora', sans-serif;
+    font-family: var(--font-heading);
     font-weight: 700;
     font-size: clamp(5rem, 20vw, 14rem);
     color: var(--color-accent);
@@ -78,16 +78,16 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .msg-title {
-    font-family: 'Sora', sans-serif;
+    font-family: var(--font-heading);
     font-weight: 600;
     font-size: clamp(1.25rem, 4vw, 1.75rem);
-    color: #ededed;
+    color: var(--color-text-primary-dark);
   }
 
   .msg-sub {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
-    color: #737373;
+    color: var(--color-text-secondary);
   }
 
   .btn-home {
@@ -99,7 +99,7 @@ import Layout from '../layouts/Layout.astro';
     border-radius: 1rem;
     background-color: var(--color-accent);
     color: #000;
-    font-family: 'Sora', sans-serif;
+    font-family: var(--font-heading);
     font-weight: 700;
     font-size: 1rem;
     text-decoration: none;
