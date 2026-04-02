@@ -63,7 +63,7 @@ export default function Hero({ data }: HeroProps) {
         style={{ opacity }}
         className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24"
       >
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text content */}
           <div>
             <motion.p
@@ -144,9 +144,9 @@ export default function Hero({ data }: HeroProps) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:flex items-center justify-center"
+            className="flex items-center justify-center order-first lg:order-last"
           >
-            <div className="relative w-72 h-72">
+            <div className="relative w-44 h-44 lg:w-72 lg:h-72">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
@@ -161,7 +161,7 @@ export default function Hero({ data }: HeroProps) {
                 />
               ) : (
                 <div className="absolute inset-8 rounded-full bg-accent flex items-center justify-center">
-                  <span className="text-5xl font-heading font-bold text-black">ME</span>
+                  <span className="text-3xl lg:text-5xl font-heading font-bold text-black">ME</span>
                 </div>
               )}
             </div>
