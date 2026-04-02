@@ -63,9 +63,9 @@ export default function Hero({ data }: HeroProps) {
         style={{ opacity }}
         className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24"
       >
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text content */}
-          <div>
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left w-full">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -110,7 +110,7 @@ export default function Hero({ data }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap gap-4 mt-8"
+              className="flex flex-wrap gap-4 mt-8 justify-center lg:justify-start"
             >
               <a
                 href="#projects"
@@ -144,26 +144,28 @@ export default function Hero({ data }: HeroProps) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center w-full"
           >
-            <div className="relative w-44 h-44 lg:w-72 lg:h-72">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex-shrink-0">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                 className="absolute inset-0 rounded-full border-2 border-dashed border-accent/30"
               />
-              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 backdrop-blur-sm border border-white/10" />
-              {data?.profile_image_url ? (
-                <img
-                  src={data.profile_image_url}
-                  alt={name}
-                  className="absolute inset-8 rounded-full object-cover"
-                />
-              ) : (
-                <div className="absolute inset-8 rounded-full bg-accent flex items-center justify-center">
-                  <span className="text-3xl lg:text-5xl font-heading font-bold text-black">ME</span>
-                </div>
-              )}
+              <div className="absolute inset-3 lg:inset-4 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 backdrop-blur-sm border border-white/10" />
+              <div className="absolute inset-6 lg:inset-8 rounded-full overflow-hidden">
+                {data?.profile_image_url ? (
+                  <img
+                    src={data.profile_image_url}
+                    alt={name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-accent flex items-center justify-center">
+                    <span className="text-3xl lg:text-5xl font-heading font-bold text-black">ME</span>
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
         </div>
