@@ -5,13 +5,14 @@
 @theme {
   --color-bg-primary: #fafafa;
   --color-bg-primary-dark: #0a0a0a;
-  --color-accent: #3b82f6;
-  --color-accent-violet: #8b5cf6;
+  --color-accent: #4ade80;
+  --color-accent-hover: #22c55e;
+  --color-accent-violet: #16a34a;
   --color-text-primary: #171717;
   --color-text-primary-dark: #ededed;
   --color-text-secondary: #737373;
   --color-border: #e5e5e5;
-  --color-border-dark: #262626;
+  --color-border-dark: #1a2a1a;
 
   --font-heading: 'Sora', sans-serif;
   --font-body: 'Inter', sans-serif;
