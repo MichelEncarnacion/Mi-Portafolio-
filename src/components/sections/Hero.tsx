@@ -12,8 +12,9 @@ function useTypewriter(text: string, speed = 50, startDelay = 0) {
     setDisplayed('');
     setDone(false);
     let i = 0;
+    let interval: ReturnType<typeof setInterval>;
     const timeout = setTimeout(() => {
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         i++;
         setDisplayed(text.slice(0, i));
         if (i >= text.length) {
@@ -21,9 +22,11 @@ function useTypewriter(text: string, speed = 50, startDelay = 0) {
           setDone(true);
         }
       }, speed);
-      return () => clearInterval(interval);
     }, startDelay);
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
   }, [text, speed, startDelay]);
 
   return { displayed, done };
