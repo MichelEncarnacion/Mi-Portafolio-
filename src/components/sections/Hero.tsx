@@ -152,7 +152,7 @@ export default function Hero({ data }: HeroProps) {
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                 className="absolute inset-0 rounded-full border-2 border-dashed border-accent/30"
               />
-              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-accent/20 to-accent-violet/20 backdrop-blur-sm border border-white/10" />
+              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 backdrop-blur-sm border border-white/10" />
               {data?.profile_image_url ? (
                 <img
                   src={data.profile_image_url}

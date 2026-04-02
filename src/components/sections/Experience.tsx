@@ -54,7 +54,7 @@ function TimelineItem({ item, index }: { item: ExperienceType; index: number }) 
       )}
 
       {/* Icon dot */}
-      <div className="absolute left-0 top-0 w-9 h-9 rounded-full bg-gradient-to-br from-accent to-accent-violet flex items-center justify-center shadow-lg shadow-accent/20">
+      <div className="absolute left-0 top-0 w-9 h-9 rounded-full bg-gradient-to-br from-accent to-accent-hover flex items-center justify-center shadow-lg shadow-accent/20">
         <Icon size={16} className="text-white" />
       </div>
 

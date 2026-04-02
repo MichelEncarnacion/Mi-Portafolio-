@@ -41,7 +41,7 @@ export default function Navbar() {
           {/* Logo */}
           <button
             onClick={() => scrollTo('hero')}
-            className="text-xl font-heading font-bold bg-gradient-to-r from-accent to-accent-violet bg-clip-text text-transparent"
+            className="text-xl font-heading font-bold bg-gradient-to-r from-accent to-accent-hover bg-clip-text text-transparent"
           >
             ME
           </button>

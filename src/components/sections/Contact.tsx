@@ -91,7 +91,7 @@ export default function Contact({ contactInfo }: ContactProps) {
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-accent to-accent-violet text-white font-medium hover:shadow-lg hover:shadow-accent/25 transition-all duration-300 disabled:opacity-50"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-accent to-accent-hover text-white font-medium hover:shadow-lg hover:shadow-accent/25 transition-all duration-300 disabled:opacity-50"
                 >
                   <Send size={16} />
                   {status === 'sending' ? '...' : t('contact.send')}
