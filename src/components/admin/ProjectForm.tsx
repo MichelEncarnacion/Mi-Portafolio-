@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Save, CheckCircle, ArrowLeft, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Save, CheckCircle, ArrowLeft, X, Upload, Trash2 } from 'lucide-react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -38,6 +38,8 @@ export default function ProjectForm({ projectId, onBack }: ProjectFormProps) {
   const [saved, setSaved] = useState(false);
   const [tab, setTab] = useState<'en' | 'es'>('en');
   const [inProgress, setInProgress] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const editorEn = useEditor({
     extensions: [StarterKit, Link.configure({ openOnClick: false })],
@@ -94,11 +96,14 @@ export default function ProjectForm({ projectId, onBack }: ProjectFormProps) {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setUploading(true);
     try {
       const url = await uploadImage(file, 'projects');
       setProject((p) => ({ ...p, image_url: url }));
     } catch (err) {
       console.error(err);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -197,9 +202,44 @@ export default function ProjectForm({ projectId, onBack }: ProjectFormProps) {
 
           <div>
             <label className="block text-sm font-medium text-neutral-300 mb-2">Screenshot</label>
-            <input type="file" accept="image/*" onChange={handleImageUpload} className="text-sm text-neutral-400 w-full" />
-            {project.image_url && (
-              <img src={project.image_url} alt="" className="mt-3 w-full rounded-xl border border-neutral-700 object-cover" />
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+            {project.image_url ? (
+              <div className="relative group">
+                <img src={project.image_url} alt="" className="w-full rounded-xl border border-neutral-700 object-cover" />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-800 text-white text-xs hover:bg-neutral-700"
+                  >
+                    <Upload size={12} /> Change
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setProject((p) => ({ ...p, image_url: null }))}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-900/60 text-red-300 text-xs hover:bg-red-900"
+                  >
+                    <Trash2 size={12} /> Remove
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="w-full border-2 border-dashed border-neutral-700 hover:border-accent/50 rounded-xl py-8 flex flex-col items-center gap-2 text-neutral-500 hover:text-accent transition-colors disabled:opacity-50"
+              >
+                <Upload size={20} />
+                <span className="text-sm">{uploading ? 'Uploading...' : 'Click to upload image'}</span>
+                <span className="text-xs">PNG, JPG, WEBP</span>
+              </button>
             )}
           </div>
 
