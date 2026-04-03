@@ -1,0 +1,275 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Página no encontrada | Michel Encarnación" lang="es">
+  <main class="min-h-screen flex flex-col items-center justify-center bg-bg-primary-dark overflow-hidden relative px-4">
+
+    <!-- Scanlines overlay -->
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- 404 heading -->
+    <div class="text-404" aria-label="Error 404">
+      <span class="digit d1">4</span>
+      <span class="digit d2">0</span>
+      <span class="digit d3">4</span>
+    </div>
+
+    <!-- Pixel art T-Rex -->
+    <div class="dino-wrap" aria-hidden="true">
+      <div class="dino"></div>
+    </div>
+
+    <!-- Message -->
+    <div class="message">
+      <p class="msg-title">El dino se comió esta página</p>
+      <p class="msg-sub">Parece que esta URL no existe... o ya fue devorada.</p>
+      <a href="/" class="btn-home">Volver al inicio</a>
+    </div>
+
+  </main>
+</Layout>
+
+<style>
+  /* ─── Scanlines ───────────────────────────────────── */
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 2px,
+      rgba(0, 0, 0, 0.15) 4px
+    );
+  }
+
+  /* ─── 404 Text ─────────────────────────────────────── */
+  .text-404 {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 0.25rem;
+    line-height: 1;
+    margin-bottom: 2rem;
+  }
+
+  .digit {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(5rem, 20vw, 14rem);
+    color: var(--color-accent);
+    display: inline-block;
+    text-shadow: 0 0 40px rgba(74, 222, 128, 0.4);
+  }
+
+  /* ─── Message ──────────────────────────────────────── */
+  .message {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  .msg-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    color: var(--color-text-primary-dark);
+  }
+
+  .msg-sub {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+  }
+
+  .btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1rem;
+    background-color: var(--color-accent);
+    color: #000;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+
+  .btn-home:hover {
+    background-color: var(--color-accent-hover);
+    transform: scale(1.05);
+  }
+
+  /* ─── T-Rex Pixel Art ──────────────────────────────── */
+  .dino-wrap {
+    position: relative;
+    z-index: 1;
+    width: 120px;
+    height: 90px;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .dino {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* Body pixels (static) on ::before */
+  .dino::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    box-shadow:
+      /* Row 1 — head top */
+      10px 10px 0 0 #4ade80, 20px 10px 0 0 #4ade80, 30px 10px 0 0 #4ade80, 40px 10px 0 0 #4ade80,
+      /* Row 2 — head */
+      10px 20px 0 0 #4ade80, 20px 20px 0 0 #4ade80, 30px 20px 0 0 #4ade80, 40px 20px 0 0 #4ade80, 50px 20px 0 0 #4ade80, 60px 20px 0 0 #4ade80,
+      /* Row 3 — head (eye = white at col 1) */
+      10px 30px 0 0 #ffffff, 20px 30px 0 0 #4ade80, 30px 30px 0 0 #4ade80, 40px 30px 0 0 #4ade80, 50px 30px 0 0 #4ade80, 60px 30px 0 0 #4ade80,
+      /* Row 4 — jaw (open) */
+      10px 40px 0 0 #4ade80, 20px 40px 0 0 #4ade80, 30px 40px 0 0 #4ade80, 40px 40px 0 0 #4ade80, 50px 40px 0 0 #4ade80, 60px 40px 0 0 #4ade80, 70px 40px 0 0 #4ade80, 80px 40px 0 0 #4ade80,
+      /* Row 5 — full body */
+      10px 50px 0 0 #4ade80, 20px 50px 0 0 #4ade80, 30px 50px 0 0 #4ade80, 40px 50px 0 0 #4ade80, 50px 50px 0 0 #4ade80, 60px 50px 0 0 #4ade80, 70px 50px 0 0 #4ade80, 80px 50px 0 0 #4ade80, 90px 50px 0 0 #4ade80, 100px 50px 0 0 #4ade80,
+      /* Row 6 — lower body + tail */
+      10px 60px 0 0 #4ade80, 20px 60px 0 0 #4ade80, 30px 60px 0 0 #4ade80, 40px 60px 0 0 #4ade80, 70px 60px 0 0 #4ade80, 80px 60px 0 0 #4ade80;
+  }
+
+  /* Leg pixels (animated in Task 4) on ::after */
+  .dino::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    box-shadow:
+      20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80, 90px 70px 0 0 #4ade80,
+      20px 80px 0 0 #4ade80, 30px 80px 0 0 #4ade80, 80px 80px 0 0 #4ade80;
+    animation: dino-walk 0.3s steps(1) infinite;
+  }
+
+  @keyframes dino-walk {
+    0% {
+      box-shadow:
+        20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80, 90px 70px 0 0 #4ade80,
+        20px 80px 0 0 #4ade80, 30px 80px 0 0 #4ade80, 80px 80px 0 0 #4ade80;
+    }
+    50% {
+      box-shadow:
+        20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 70px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80,
+        30px 80px 0 0 #4ade80, 40px 80px 0 0 #4ade80, 70px 80px 0 0 #4ade80;
+    }
+    100% {
+      box-shadow:
+        20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80, 90px 70px 0 0 #4ade80,
+        20px 80px 0 0 #4ade80, 30px 80px 0 0 #4ade80, 80px 80px 0 0 #4ade80;
+    }
+  }
+
+  /* ─── Entry: dino slides in from right ────────────── */
+  @keyframes dino-enter {
+    from { translate: 110vw 0; }
+    to   { translate: 0 0;     }
+  }
+
+  /* ─── Idle: subtle vertical bob ───────────────────── */
+  @keyframes dino-idle {
+    0%, 100% { transform: translateY(0);   }
+    50%       { transform: translateY(-6px); }
+  }
+
+  /* ─── 404 shake ────────────────────────────────────── */
+  @keyframes shake {
+    0%,100% { transform: translateX(0);    }
+    10%     { transform: translateX(-8px); }
+    20%     { transform: translateX(8px);  }
+    30%     { transform: translateX(-6px); }
+    40%     { transform: translateX(6px);  }
+    50%     { transform: translateX(-4px); }
+    60%     { transform: translateX(4px);  }
+    70%     { transform: translateX(-2px); }
+    80%     { transform: translateX(2px);  }
+    90%     { transform: translateX(0);    }
+  }
+
+  /* ─── Individual digit explosions ──────────────────── */
+  @keyframes explode-1 {
+    0%   { transform: translate(0, 0) rotate(0deg);            opacity: 1; }
+    100% { transform: translate(-120px, -80px) rotate(-25deg); opacity: 0; }
+  }
+  @keyframes explode-2 {
+    0%   { transform: translate(0, 0) rotate(0deg);      opacity: 1; }
+    100% { transform: translate(0, 120px) rotate(15deg); opacity: 0; }
+  }
+  @keyframes explode-3 {
+    0%   { transform: translate(0, 0) rotate(0deg);           opacity: 1; }
+    100% { transform: translate(140px, -60px) rotate(30deg);  opacity: 0; }
+  }
+
+  /* ─── Message fade up ───────────────────────────────── */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  /* ─── Animation wiring ─────────────────────────────── */
+  .dino-wrap {
+    animation:
+      dino-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both,
+      dino-idle  1.0s ease-in-out 1.2s infinite;
+  }
+
+  .text-404 {
+    animation: shake 0.4s ease-in-out 0.9s both;
+  }
+
+  .d1 {
+    animation: explode-1 0.5s ease-in 1.3s forwards;
+  }
+  .d2 {
+    animation: explode-2 0.5s ease-in 1.35s forwards;
+  }
+  .d3 {
+    animation: explode-3 0.5s ease-in 1.4s forwards;
+  }
+
+  .message {
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 1.8s forwards;
+  }
+
+  /* ─── Responsive (scale dino down on mobile) ────────────── */
+  @media (max-width: 480px) {
+    .dino-wrap {
+      transform: scale(0.7);
+      transform-origin: center top;
+    }
+  }
+
+  /* ─── Accessibility: reduce motion ──────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .dino-wrap,
+    .text-404,
+    .d1, .d2, .d3,
+    .message,
+    .dino::after {
+      animation: none !important;
+    }
+    .message {
+      opacity: 1;
+    }
+  }
+</style>
