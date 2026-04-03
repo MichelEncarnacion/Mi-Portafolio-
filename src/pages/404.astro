@@ -158,5 +158,24 @@ import Layout from '../layouts/Layout.astro';
     box-shadow:
       20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80, 90px 70px 0 0 #4ade80,
       20px 80px 0 0 #4ade80, 30px 80px 0 0 #4ade80, 80px 80px 0 0 #4ade80;
+    animation: dino-walk 0.3s steps(1) infinite;
+  }
+
+  @keyframes dino-walk {
+    0% {
+      box-shadow:
+        20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80, 90px 70px 0 0 #4ade80,
+        20px 80px 0 0 #4ade80, 30px 80px 0 0 #4ade80, 80px 80px 0 0 #4ade80;
+    }
+    50% {
+      box-shadow:
+        20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 70px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80,
+        30px 80px 0 0 #4ade80, 40px 80px 0 0 #4ade80, 70px 80px 0 0 #4ade80;
+    }
+    100% {
+      box-shadow:
+        20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80, 90px 70px 0 0 #4ade80,
+        20px 80px 0 0 #4ade80, 30px 80px 0 0 #4ade80, 80px 80px 0 0 #4ade80;
+    }
   }
 </style>
