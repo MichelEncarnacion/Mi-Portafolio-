@@ -250,4 +250,26 @@ import Layout from '../layouts/Layout.astro';
     opacity: 0;
     animation: fade-up 0.6s ease-out 1.8s forwards;
   }
+
+  /* ─── Responsive (scale dino down on mobile) ────────────── */
+  @media (max-width: 480px) {
+    .dino-wrap {
+      transform: scale(0.7);
+      transform-origin: center top;
+    }
+  }
+
+  /* ─── Accessibility: reduce motion ──────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .dino-wrap,
+    .text-404,
+    .d1, .d2, .d3,
+    .message,
+    .dino::after {
+      animation: none !important;
+    }
+    .message {
+      opacity: 1;
+    }
+  }
 </style>
