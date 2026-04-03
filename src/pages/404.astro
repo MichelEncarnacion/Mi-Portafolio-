@@ -110,4 +110,53 @@ import Layout from '../layouts/Layout.astro';
     background-color: var(--color-accent-hover);
     transform: scale(1.05);
   }
+
+  /* ─── T-Rex Pixel Art ──────────────────────────────── */
+  .dino-wrap {
+    position: relative;
+    z-index: 1;
+    width: 120px;
+    height: 90px;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .dino {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* Body pixels (static) on ::before */
+  .dino::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    box-shadow:
+      /* Row 1 — head top */
+      10px 10px 0 0 #4ade80, 20px 10px 0 0 #4ade80, 30px 10px 0 0 #4ade80, 40px 10px 0 0 #4ade80,
+      /* Row 2 — head */
+      10px 20px 0 0 #4ade80, 20px 20px 0 0 #4ade80, 30px 20px 0 0 #4ade80, 40px 20px 0 0 #4ade80, 50px 20px 0 0 #4ade80, 60px 20px 0 0 #4ade80,
+      /* Row 3 — head (eye = white at col 1) */
+      10px 30px 0 0 #ffffff, 20px 30px 0 0 #4ade80, 30px 30px 0 0 #4ade80, 40px 30px 0 0 #4ade80, 50px 30px 0 0 #4ade80, 60px 30px 0 0 #4ade80,
+      /* Row 4 — jaw (open) */
+      10px 40px 0 0 #4ade80, 20px 40px 0 0 #4ade80, 30px 40px 0 0 #4ade80, 40px 40px 0 0 #4ade80, 50px 40px 0 0 #4ade80, 60px 40px 0 0 #4ade80, 70px 40px 0 0 #4ade80, 80px 40px 0 0 #4ade80,
+      /* Row 5 — full body */
+      10px 50px 0 0 #4ade80, 20px 50px 0 0 #4ade80, 30px 50px 0 0 #4ade80, 40px 50px 0 0 #4ade80, 50px 50px 0 0 #4ade80, 60px 50px 0 0 #4ade80, 70px 50px 0 0 #4ade80, 80px 50px 0 0 #4ade80, 90px 50px 0 0 #4ade80, 100px 50px 0 0 #4ade80,
+      /* Row 6 — lower body + tail */
+      10px 60px 0 0 #4ade80, 20px 60px 0 0 #4ade80, 30px 60px 0 0 #4ade80, 40px 60px 0 0 #4ade80, 70px 60px 0 0 #4ade80, 80px 60px 0 0 #4ade80;
+  }
+
+  /* Leg pixels (animated in Task 4) on ::after */
+  .dino::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    box-shadow:
+      20px 70px 0 0 #4ade80, 30px 70px 0 0 #4ade80, 80px 70px 0 0 #4ade80, 90px 70px 0 0 #4ade80,
+      20px 80px 0 0 #4ade80, 30px 80px 0 0 #4ade80, 80px 80px 0 0 #4ade80;
+  }
 </style>
