@@ -178,4 +178,76 @@ import Layout from '../layouts/Layout.astro';
         20px 80px 0 0 #4ade80, 30px 80px 0 0 #4ade80, 80px 80px 0 0 #4ade80;
     }
   }
+
+  /* ─── Entry: dino slides in from right ────────────── */
+  @keyframes dino-enter {
+    from { transform: translateX(110vw); }
+    to   { transform: translateX(0);     }
+  }
+
+  /* ─── Idle: subtle vertical bob ───────────────────── */
+  @keyframes dino-idle {
+    0%, 100% { transform: translateY(0);   }
+    50%       { transform: translateY(-6px); }
+  }
+
+  /* ─── 404 shake ────────────────────────────────────── */
+  @keyframes shake {
+    0%,100% { transform: translateX(0);    }
+    10%     { transform: translateX(-8px); }
+    20%     { transform: translateX(8px);  }
+    30%     { transform: translateX(-6px); }
+    40%     { transform: translateX(6px);  }
+    50%     { transform: translateX(-4px); }
+    60%     { transform: translateX(4px);  }
+    70%     { transform: translateX(-2px); }
+    80%     { transform: translateX(2px);  }
+    90%     { transform: translateX(0);    }
+  }
+
+  /* ─── Individual digit explosions ──────────────────── */
+  @keyframes explode-1 {
+    0%   { transform: translate(0, 0) rotate(0deg);            opacity: 1; }
+    100% { transform: translate(-120px, -80px) rotate(-25deg); opacity: 0; }
+  }
+  @keyframes explode-2 {
+    0%   { transform: translate(0, 0) rotate(0deg);      opacity: 1; }
+    100% { transform: translate(0, 120px) rotate(15deg); opacity: 0; }
+  }
+  @keyframes explode-3 {
+    0%   { transform: translate(0, 0) rotate(0deg);           opacity: 1; }
+    100% { transform: translate(140px, -60px) rotate(30deg);  opacity: 0; }
+  }
+
+  /* ─── Message fade up ───────────────────────────────── */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  /* ─── Animation wiring ─────────────────────────────── */
+  .dino-wrap {
+    animation:
+      dino-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both,
+      dino-idle  1.0s ease-in-out 1.2s infinite;
+  }
+
+  .text-404 {
+    animation: shake 0.4s ease-in-out 0.9s both;
+  }
+
+  .d1 {
+    animation: explode-1 0.5s ease-in 1.3s forwards;
+  }
+  .d2 {
+    animation: explode-2 0.5s ease-in 1.35s forwards;
+  }
+  .d3 {
+    animation: explode-3 0.5s ease-in 1.4s forwards;
+  }
+
+  .message {
+    opacity: 0;
+    animation: fade-up 0.6s ease-out 1.8s forwards;
+  }
 </style>
