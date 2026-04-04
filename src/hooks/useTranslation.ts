@@ -15,12 +15,21 @@ function getNestedValue(obj: Record<string, unknown>, path: string): string {
   return typeof current === 'string' ? current : path;
 }
 
-export function useTranslation() {
-  const [lang, setLang] = useState<Lang>('en');
+function getStoredLang(): Lang {
+  if (typeof window === 'undefined') return 'en';
+  return (localStorage.getItem('lang') as Lang) ?? 'en';
+}
 
+export function useTranslation() {
+  const [lang, setLang] = useState<Lang>(getStoredLang);
+
+  // Sync with other component instances via CustomEvent
   useEffect(() => {
-    const stored = localStorage.getItem('lang') as Lang | null;
-    if (stored && stored !== lang) setLang(stored);
+    const handler = (e: Event) => {
+      setLang((e as CustomEvent<Lang>).detail);
+    };
+    window.addEventListener('lang-change', handler);
+    return () => window.removeEventListener('lang-change', handler);
   }, []);
 
   useEffect(() => {
@@ -35,7 +44,11 @@ export function useTranslation() {
   );
 
   const toggleLang = useCallback(() => {
-    setLang((prev) => (prev === 'en' ? 'es' : 'en'));
+    setLang((prev) => {
+      const next: Lang = prev === 'en' ? 'es' : 'en';
+      window.dispatchEvent(new CustomEvent<Lang>('lang-change', { detail: next }));
+      return next;
+    });
   }, []);
 
   return { lang, setLang, toggleLang, t };
