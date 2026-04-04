@@ -18,6 +18,15 @@
   --font-body: 'Inter', sans-serif;
 }
 
+/* Light mode: darken accent for readable text contrast (AA compliant on white) */
+@layer base {
+  :root:not(.dark) {
+    --color-accent: #15803d;
+    --color-accent-hover: #166534;
+    --color-accent-violet: #14532d;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
