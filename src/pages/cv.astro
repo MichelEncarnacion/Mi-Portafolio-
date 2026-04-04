@@ -1,0 +1,391 @@
+---
+import { supabaseServer } from '../lib/supabase-server';
+import '../styles/global.css';
+
+const { data: hero } = await supabaseServer
+  .from('hero_content')
+  .select('*')
+  .eq('status', 'published')
+  .single();
+
+const { data: experience } = await supabaseServer
+  .from('experience')
+  .select('*')
+  .eq('status', 'published')
+  .order('sort_order');
+
+const { data: skills } = await supabaseServer
+  .from('skills')
+  .select('*')
+  .eq('status', 'published')
+  .order('sort_order');
+
+const { data: contact } = await supabaseServer
+  .from('contact_info')
+  .select('*')
+  .single();
+
+const { data: certifications } = await supabaseServer
+  .from('certifications')
+  .select('*')
+  .eq('status', 'published')
+  .order('sort_order');
+
+const name = hero?.name ?? 'Michel Encarnación';
+const tagline = hero?.tagline_en ?? '';
+const description = hero?.description_en ?? '';
+
+const workExp = experience?.filter(e => e.type === 'work') ?? [];
+const eduExp = experience?.filter(e => e.type === 'education') ?? [];
+const otherExp = experience?.filter(e => e.type !== 'work' && e.type !== 'education') ?? [];
+
+function fmtDate(d: string | null) {
+  if (!d) return 'Present';
+  return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+const skillsByCategory = {
+  languages: skills?.filter(s => s.category === 'languages') ?? [],
+  frameworks: skills?.filter(s => s.category === 'frameworks') ?? [],
+  databases: skills?.filter(s => s.category === 'databases') ?? [],
+  other: skills?.filter(s => s.category === 'other') ?? [],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV — {name}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --accent: #16a34a;
+        --text: #111;
+        --muted: #555;
+        --border: #ddd;
+        --font-body: 'Inter', sans-serif;
+        --font-heading: 'Sora', sans-serif;
+      }
+
+      body {
+        font-family: var(--font-body);
+        font-size: 10.5pt;
+        color: var(--text);
+        background: #fff;
+        line-height: 1.55;
+      }
+
+      .page {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 2.4rem 2.8rem;
+      }
+
+      /* Header */
+      .cv-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--accent);
+        margin-bottom: 1.4rem;
+      }
+      .cv-header h1 {
+        font-family: var(--font-heading);
+        font-size: 22pt;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.1;
+      }
+      .cv-header .tagline {
+        font-size: 10pt;
+        color: var(--accent);
+        font-weight: 600;
+        margin-top: 0.2rem;
+      }
+      .cv-header .contacts {
+        text-align: right;
+        font-size: 9pt;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .cv-header .contacts a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      /* Print button */
+      .print-bar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0.6rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        z-index: 100;
+        font-size: 9pt;
+        color: var(--muted);
+      }
+      .print-bar button {
+        padding: 0.4rem 1.2rem;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 9pt;
+        font-weight: 600;
+      }
+      .print-bar a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 9pt;
+      }
+
+      /* Sections */
+      .cv-section { margin-bottom: 1.3rem; }
+      .cv-section h2 {
+        font-family: var(--font-heading);
+        font-size: 9.5pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 0.25rem;
+        margin-bottom: 0.8rem;
+      }
+
+      /* Summary */
+      .summary { font-size: 10pt; color: var(--muted); }
+
+      /* Experience items */
+      .exp-item { margin-bottom: 0.9rem; }
+      .exp-item:last-child { margin-bottom: 0; }
+      .exp-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.5rem;
+      }
+      .exp-title {
+        font-weight: 600;
+        font-size: 10.5pt;
+      }
+      .exp-date {
+        font-size: 9pt;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .exp-org {
+        font-size: 9.5pt;
+        color: var(--accent);
+        font-weight: 500;
+      }
+      .exp-desc {
+        font-size: 9.5pt;
+        color: var(--muted);
+        margin-top: 0.2rem;
+      }
+      .exp-extra {
+        font-size: 9pt;
+        color: #888;
+        font-style: italic;
+        margin-top: 0.15rem;
+      }
+
+      /* Skills */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem 2rem;
+      }
+      .skill-category h3 {
+        font-size: 9pt;
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 0.3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .skill-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+      }
+      .skill-chip {
+        font-size: 8.5pt;
+        padding: 0.15rem 0.55rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: var(--text);
+      }
+
+      /* Certifications */
+      .cert-list { list-style: none; }
+      .cert-list li {
+        font-size: 9.5pt;
+        padding: 0.15rem 0;
+        color: var(--muted);
+      }
+      .cert-list li strong { color: var(--text); }
+
+      /* Two column layout */
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      @media print {
+        .print-bar { display: none !important; }
+        .page { padding: 0; max-width: 100%; }
+        body { font-size: 10pt; }
+        a { color: inherit !important; }
+        @page { margin: 1.8cm 2cm; }
+      }
+
+      @media screen {
+        body { background: #f4f4f4; padding-top: 3rem; }
+        .page {
+          background: #fff;
+          box-shadow: 0 2px 24px rgba(0,0,0,0.10);
+          border-radius: 4px;
+          margin: 1.5rem auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Screen-only print bar -->
+    <div class="print-bar">
+      <a href="/">← Back to portfolio</a>
+      <span>{name} — Curriculum Vitae</span>
+      <button onclick="window.print()">⬇ Save as PDF</button>
+    </div>
+
+    <div class="page">
+      <!-- Header -->
+      <header class="cv-header">
+        <div>
+          <h1>{name}</h1>
+          {tagline && <p class="tagline">{tagline}</p>}
+        </div>
+        <div class="contacts">
+          {contact?.email && <div><a href={`mailto:${contact.email}`}>{contact.email}</a></div>}
+          {contact?.phone && <div>{contact.phone}</div>}
+          {contact?.location && <div>{contact.location}</div>}
+          {contact?.linkedin_url && <div><a href={contact.linkedin_url}>linkedin.com/in/michelencarnacion</a></div>}
+          {contact?.github_url && <div><a href={contact.github_url}>github.com/MichelEncarnacion</a></div>}
+        </div>
+      </header>
+
+      <!-- Summary -->
+      {description && (
+        <section class="cv-section">
+          <h2>Summary</h2>
+          <p class="summary">{description}</p>
+        </section>
+      )}
+
+      <!-- Experience -->
+      {workExp.length > 0 && (
+        <section class="cv-section">
+          <h2>Experience</h2>
+          {workExp.map(e => (
+            <div class="exp-item">
+              <div class="exp-header">
+                <span class="exp-title">{e.title_en}</span>
+                <span class="exp-date">{fmtDate(e.start_date)} — {fmtDate(e.end_date)}</span>
+              </div>
+              <div class="exp-org">{e.organization}</div>
+              {e.description_en && <p class="exp-desc">{e.description_en}</p>}
+              {e.extra_info && <p class="exp-extra">{e.extra_info}</p>}
+            </div>
+          ))}
+        </section>
+      )}
+
+      <!-- Education -->
+      {eduExp.length > 0 && (
+        <section class="cv-section">
+          <h2>Education</h2>
+          {eduExp.map(e => (
+            <div class="exp-item">
+              <div class="exp-header">
+                <span class="exp-title">{e.title_en}</span>
+                <span class="exp-date">{fmtDate(e.start_date)} — {fmtDate(e.end_date)}</span>
+              </div>
+              <div class="exp-org">{e.organization}</div>
+              {e.description_en && <p class="exp-desc">{e.description_en}</p>}
+            </div>
+          ))}
+        </section>
+      )}
+
+      <!-- Skills + Certifications side by side -->
+      <div class="two-col">
+        <!-- Skills -->
+        {skills && skills.length > 0 && (
+          <section class="cv-section">
+            <h2>Skills</h2>
+            <div class="skills-grid" style="grid-template-columns: 1fr;">
+              {Object.entries(skillsByCategory).filter(([, items]) => items.length > 0).map(([cat, items]) => (
+                <div class="skill-category">
+                  <h3>{cat}</h3>
+                  <div class="skill-chips">
+                    {items.map(s => <span class="skill-chip">{s.name}</span>)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- Certifications + Other -->
+        <div>
+          {certifications && certifications.length > 0 && (
+            <section class="cv-section">
+              <h2>Certifications</h2>
+              <ul class="cert-list">
+                {certifications.map(c => (
+                  <li>
+                    <strong>{c.title_en}</strong> — {c.issuer}
+                    {c.date_obtained && ` (${fmtDate(c.date_obtained)})`}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {otherExp.length > 0 && (
+            <section class="cv-section">
+              <h2>Other</h2>
+              {otherExp.map(e => (
+                <div class="exp-item">
+                  <div class="exp-header">
+                    <span class="exp-title">{e.title_en}</span>
+                    <span class="exp-date">{fmtDate(e.start_date)}</span>
+                  </div>
+                  <div class="exp-org">{e.organization}</div>
+                  {e.description_en && <p class="exp-desc">{e.description_en}</p>}
+                </div>
+              ))}
+            </section>
+          )}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
