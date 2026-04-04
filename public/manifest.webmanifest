@@ -1,0 +1,22 @@
+{
+  "name": "Michel Encarnación — Portfolio",
+  "short_name": "Michel Dev",
+  "description": "Portfolio of Michel Encarnación Dionicio — Software Engineering Student & Full-Stack Developer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#4ade80",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

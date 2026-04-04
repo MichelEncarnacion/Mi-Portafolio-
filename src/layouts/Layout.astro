@@ -6,13 +6,15 @@ interface Props {
   description?: string;
   lang?: string;
   ogImage?: string;
+  keywords?: string;
 }
 
 const {
   title = 'Michel Encarnación — Software Developer',
   description = 'Portfolio of Michel Encarnación Dionicio — Software Engineering Student & Full-Stack Developer',
   lang = 'en',
-  ogImage = '/og.png'
+  ogImage = '/og.png',
+  keywords = 'Michel Encarnación, software developer, full-stack, React, TypeScript, Astro, portfolio, UPAEP'
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
@@ -35,6 +37,8 @@ const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url.origin);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Michel Encarnación" />
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->
@@ -52,9 +56,17 @@ const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url.origin);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#4ade80" />
+    <meta name="color-scheme" content="dark light" />
+    <!-- Preload critical fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet" />
+    </noscript>
     <title>{title}</title>
 
     <!-- Schema.org JSON-LD -->
