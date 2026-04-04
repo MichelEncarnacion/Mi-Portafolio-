@@ -4,7 +4,8 @@
     "projects": "Projects",
     "skills": "Skills",
     "experience": "Experience",
-    "contact": "Contact"
+    "contact": "Contact",
+    "about": "About"
   },
   "hero": {
     "greeting": "Hi, I'm",

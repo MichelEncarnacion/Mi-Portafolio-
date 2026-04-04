@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { supabaseServer } from '../lib/supabase-server';
+import Navbar from '../components/layout/Navbar';
+import AboutPage from '../components/sections/AboutPage';
+import Footer from '../components/layout/Footer';
+
+const { data: heroData } = await supabaseServer
+  .from('hero_content')
+  .select('*')
+  .eq('status', 'published')
+  .single();
+
+const { data: experience } = await supabaseServer
+  .from('experience')
+  .select('*')
+  .eq('status', 'published')
+  .order('sort_order');
+
+const name = heroData?.name ?? 'Michel Encarnación';
+---
+
+<Layout
+  title={`About — ${name}`}
+  description={`Learn more about ${name} — Software Engineering Student & Full-Stack Developer.`}
+  ogImage={heroData?.profile_image_url ?? '/og.png'}
+>
+  <Navbar client:only="react" />
+  <AboutPage client:only="react" hero={heroData} experience={experience} />
+  <Footer client:only="react" />
+</Layout>
