@@ -6,6 +6,7 @@ import { useTheme } from '../../hooks/useTheme';
 import LanguageToggle from '../ui/LanguageToggle';
 
 const NAV_ITEMS = ['hero', 'projects', 'skills', 'experience', 'contact'] as const;
+const isHomePage = () => typeof window !== 'undefined' && (window.location.pathname === '/' || window.location.pathname === '');
 
 export default function Navbar() {
   const { lang, toggleLang, t } = useTranslation();
@@ -68,7 +69,7 @@ export default function Navbar() {
             {NAV_ITEMS.map((item) => (
               <button
                 key={item}
-                onClick={() => scrollTo(item)}
+                onClick={() => isHomePage() ? scrollTo(item) : (window.location.href = `/#${item}`)}
                 className={`relative text-sm font-medium transition-colors ${
                   activeSection === item
                     ? 'text-accent'
@@ -84,6 +85,16 @@ export default function Navbar() {
                 )}
               </button>
             ))}
+            <a
+              href="/about"
+              className={`relative text-sm font-medium transition-colors ${
+                typeof window !== 'undefined' && window.location.pathname === '/about'
+                  ? 'text-accent'
+                  : 'text-text-secondary hover:text-text-primary dark:hover:text-text-primary-dark'
+              }`}
+            >
+              {t('nav.about')}
+            </a>
           </div>
 
           {/* Controls */}
@@ -120,7 +131,7 @@ export default function Navbar() {
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item}
-                  onClick={() => scrollTo(item)}
+                  onClick={() => isHomePage() ? scrollTo(item) : (window.location.href = `/#${item}`)}
                   className={`block w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                     activeSection === item
                       ? 'text-accent bg-accent/10'
@@ -130,6 +141,16 @@ export default function Navbar() {
                   {t(`nav.${item}`)}
                 </button>
               ))}
+              <a
+                href="/about"
+                className={`block w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  typeof window !== 'undefined' && window.location.pathname === '/about'
+                    ? 'text-accent bg-accent/10'
+                    : 'text-text-secondary hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                }`}
+              >
+                {t('nav.about')}
+              </a>
             </div>
           </motion.div>
         )}
