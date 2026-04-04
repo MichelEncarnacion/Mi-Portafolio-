@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Mail, Phone, Link, GitFork, CheckCircle, AlertCircle } from 'lucide-react';
+import { Send, Mail, Phone, Link, GitFork, CheckCircle, AlertCircle, Copy, Check } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
 import ScrollReveal from '../ui/ScrollReveal';
 import type { ContactInfo } from '../../lib/types';
@@ -12,30 +12,33 @@ interface ContactProps {
 export default function Contact({ contactInfo }: ContactProps) {
   const { t } = useTranslation();
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [copied, setCopied] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('sending');
-
-    const formData = new FormData(e.currentTarget);
-    const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
-
-    if (!endpoint) {
-      // Dev mode — simulate success
-      setTimeout(() => setStatus('success'), 1000);
-      return;
-    }
-
+    const data = new FormData(e.currentTarget);
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        body: formData,
-        headers: { Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          email: data.get('email'),
+          message: data.get('message'),
+        }),
       });
       setStatus(res.ok ? 'success' : 'error');
     } catch {
       setStatus('error');
     }
+  };
+
+  const copyEmail = () => {
+    if (!contactInfo?.email) return;
+    navigator.clipboard.writeText(contactInfo.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const inputClass =
@@ -109,15 +112,24 @@ export default function Contact({ contactInfo }: ContactProps) {
           <ScrollReveal delay={0.15}>
             <div className="space-y-5 pt-2">
               {contactInfo?.email && (
-                <a
-                  href={`mailto:${contactInfo.email}`}
-                  className="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors group"
-                >
-                  <div className="p-2.5 rounded-xl bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                    <Mail size={18} className="text-accent" />
-                  </div>
-                  <span className="text-sm">{contactInfo.email}</span>
-                </a>
+                <div className="flex items-center gap-2 group">
+                  <a
+                    href={`mailto:${contactInfo.email}`}
+                    className="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors flex-1"
+                  >
+                    <div className="p-2.5 rounded-xl bg-accent/10 group-hover:bg-accent/20 transition-colors">
+                      <Mail size={18} className="text-accent" />
+                    </div>
+                    <span className="text-sm">{contactInfo.email}</span>
+                  </a>
+                  <button
+                    onClick={copyEmail}
+                    title="Copy email"
+                    className="p-2 rounded-lg text-neutral-500 hover:text-accent hover:bg-accent/10 transition-colors"
+                  >
+                    {copied ? <Check size={14} className="text-accent" /> : <Copy size={14} />}
+                  </button>
+                </div>
               )}
               {contactInfo?.phone && (
                 <a

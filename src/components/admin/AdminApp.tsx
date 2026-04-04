@@ -11,6 +11,7 @@ import MediaLibrary from './MediaLibrary';
 import ContactInfoEditor from './ContactInfoEditor';
 import ResumeUploader from './ResumeUploader';
 import VersionHistory from './VersionHistory';
+import SubmissionsViewer from './SubmissionsViewer';
 
 const SECTIONS: Record<string, () => JSX.Element> = {
   dashboard: Dashboard,
@@ -21,6 +22,7 @@ const SECTIONS: Record<string, () => JSX.Element> = {
   experience: ExperienceManager,
   media: MediaLibrary,
   contact: ContactInfoEditor,
+  submissions: SubmissionsViewer,
   resume: ResumeUploader,
   versions: VersionHistory,
 };

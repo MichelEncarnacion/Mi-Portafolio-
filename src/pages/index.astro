@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { supabaseServer } from '../lib/supabase-server';
 
 import Navbar from '../components/layout/Navbar';
+import ScrollProgress from '../components/ui/ScrollProgress';
 import Hero from '../components/sections/Hero';
 import Projects from '../components/sections/Projects';
 import Skills from '../components/sections/Skills';
@@ -47,6 +48,7 @@ const { data: contactInfo } = await supabaseServer
 ---
 
 <Layout>
+  <ScrollProgress client:only="react" />
   <Navbar client:only="react" />
   <Hero client:only="react" data={heroData} />
   <Projects client:visible data={projects} />
