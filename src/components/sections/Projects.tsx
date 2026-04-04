@@ -3,6 +3,7 @@ import { useTranslation } from '../../hooks/useTranslation';
 import ScrollReveal from '../ui/ScrollReveal';
 import ProjectCard from '../ui/ProjectCard';
 import ProjectModal from '../ui/ProjectModal';
+import { ProjectCardSkeleton } from '../ui/Skeleton';
 import type { Project } from '../../lib/types';
 
 interface ProjectsProps {
@@ -14,7 +15,17 @@ export default function Projects({ data }: ProjectsProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeTag, setActiveTag] = useState<string | null>(null);
 
-  if (!data || data.length === 0) return null;
+  if (!data) return (
+    <section id="projects" className="py-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => <ProjectCardSkeleton key={i} />)}
+        </div>
+      </div>
+    </section>
+  );
+
+  if (data.length === 0) return null;
 
   const allTags = Array.from(new Set(data.flatMap((p) => p.tags))).sort();
   const filtered = activeTag ? data.filter((p) => p.tags.includes(activeTag)) : data;

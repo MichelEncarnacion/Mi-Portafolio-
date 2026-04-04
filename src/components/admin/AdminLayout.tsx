@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import {
   LayoutDashboard, Type, UserRound, FolderOpen, Wrench, Briefcase,
-  Image, Contact2, FileText, History, LogOut, Eye, Menu, X
+  Image, Contact2, Inbox, FileText, History, LogOut, Eye, Menu, X
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useSupabase';
 
@@ -20,6 +20,7 @@ const NAV_ITEMS = [
   { id: 'experience', label: 'Experience', icon: Briefcase },
   { id: 'media', label: 'Media Library', icon: Image },
   { id: 'contact', label: 'Contact Info', icon: Contact2 },
+  { id: 'submissions', label: 'Submissions', icon: Inbox },
   { id: 'resume', label: 'Resume/CV', icon: FileText },
   { id: 'versions', label: 'Version History', icon: History },
 ];

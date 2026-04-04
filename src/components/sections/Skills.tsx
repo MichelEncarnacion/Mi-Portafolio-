@@ -1,6 +1,7 @@
 import { useTranslation } from '../../hooks/useTranslation';
 import ScrollReveal from '../ui/ScrollReveal';
 import SkillChip from '../ui/SkillChip';
+import { SkillChipSkeleton } from '../ui/Skeleton';
 import type { Skill, Certification } from '../../lib/types';
 
 interface SkillsProps {
@@ -19,7 +20,17 @@ const LEVEL_LEGEND = [
 export default function Skills({ skills, certifications }: SkillsProps) {
   const { lang, t } = useTranslation();
 
-  if (!skills || skills.length === 0) return null;
+  if (!skills) return (
+    <section id="skills" className="py-24 bg-neutral-50 dark:bg-neutral-950">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap gap-3 justify-center">
+          {Array.from({ length: 18 }).map((_, i) => <SkillChipSkeleton key={i} />)}
+        </div>
+      </div>
+    </section>
+  );
+
+  if (skills.length === 0) return null;
 
   const grouped = CATEGORIES.reduce((acc, cat) => {
     acc[cat] = (skills ?? []).filter((s) => s.category === cat);
