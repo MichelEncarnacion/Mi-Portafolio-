@@ -20,8 +20,18 @@ const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url.origin);
 ---
 
 <!doctype html>
-<html lang={lang} class="dark">
+<html lang={lang}>
   <head>
+    <!-- Theme: apply before render to avoid flash -->
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
