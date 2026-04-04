@@ -121,7 +121,7 @@ export default function Hero({ data }: HeroProps) {
                 {t('hero.cta_projects')}
               </a>
               <a
-                href="/cv"
+                href={data?.resume_url ?? '/cv'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border border-neutral-300 dark:border-neutral-700 font-medium hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:scale-105 transition-all duration-300"
