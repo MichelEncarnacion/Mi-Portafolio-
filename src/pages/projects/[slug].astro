@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { supabaseServer } from '../../lib/supabase-server';
+import { ArrowLeft, ExternalLink, GitFork, Calendar } from 'lucide-react';
+
+const { slug } = Astro.params;
+
+const { data: project } = await supabaseServer
+  .from('projects')
+  .select('*')
+  .eq('slug', slug)
+  .eq('status', 'published')
+  .single();
+
+if (!project) return Astro.redirect('/404');
+
+const lang = (Astro.request.headers.get('accept-language') ?? 'en').startsWith('es') ? 'es' : 'en';
+const description = lang === 'en'
+  ? (project.long_description_en || project.description_en)
+  : (project.long_description_es || project.description_es);
+const shortDesc = lang === 'en' ? project.description_en : project.description_es;
+
+const startDate = project.start_date
+  ? new Date(project.start_date).toLocaleDateString(lang === 'es' ? 'es-MX' : 'en-US', { year: 'numeric', month: 'long' })
+  : null;
+const endDate = project.end_date
+  ? new Date(project.end_date).toLocaleDateString(lang === 'es' ? 'es-MX' : 'en-US', { year: 'numeric', month: 'long' })
+  : lang === 'es' ? 'En progreso' : 'In Progress';
+---
+
+<Layout
+  title={`${project.title} — Michel Encarnación`}
+  description={shortDesc}
+  ogImage={project.image_url ?? '/og.png'}
+>
+  <main class="min-h-screen bg-bg-primary dark:bg-bg-primary-dark text-text-primary dark:text-text-primary-dark">
+
+    <!-- Back button -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4">
+      <a
+        href="/#projects"
+        class="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors font-mono"
+      >
+        <ArrowLeft size={16} client:load />
+        cd ..
+      </a>
+    </div>
+
+    <!-- Hero image -->
+    {project.image_url && (
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+        <div class="rounded-2xl overflow-hidden border border-neutral-800 aspect-video">
+          <img
+            src={project.image_url}
+            alt={project.title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+
+      <!-- Header -->
+      <div class="mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class={`px-3 py-1 rounded-full text-xs font-medium ${
+            !project.end_date
+              ? 'bg-accent/20 text-accent border border-accent/30'
+              : 'bg-neutral-800 text-neutral-400 border border-neutral-700'
+          }`}>
+            {!project.end_date ? '● In Progress' : '✓ Done'}
+          </span>
+          {startDate && (
+            <span class="flex items-center gap-1.5 text-xs text-text-secondary font-mono">
+              <Calendar size={12} />
+              {startDate} — {endDate}
+            </span>
+          )}
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl font-heading font-bold mb-4">{project.title}</h1>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2 mb-6">
+          {project.tags.map((tag: string) => (
+            <span class="px-3 py-1 rounded-md text-sm font-mono bg-neutral-900 dark:bg-neutral-800 text-accent/80 border border-accent/10">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <!-- Links -->
+        <div class="flex gap-3">
+          {project.project_url && (
+            <a
+              href={project.project_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-black font-bold text-sm hover:bg-accent-hover hover:scale-105 transition-all duration-200"
+            >
+              <ExternalLink size={15} />
+              {lang === 'es' ? 'Ver demo' : 'Live demo'}
+            </a>
+          )}
+          {project.repo_url && (
+            <a
+              href={project.repo_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-neutral-700 text-sm hover:border-accent/50 hover:text-accent transition-all duration-200"
+            >
+              <GitFork size={15} />
+              {lang === 'es' ? 'Ver código' : 'Source code'}
+            </a>
+          )}
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="w-full h-px bg-neutral-800 mb-10" />
+
+      <!-- Description -->
+      <div class="prose prose-invert prose-neutral max-w-none">
+        <p class="text-lg text-text-secondary leading-relaxed whitespace-pre-line">{description}</p>
+      </div>
+
+      <!-- Gallery -->
+      {project.gallery_urls && project.gallery_urls.length > 0 && (
+        <div class="mt-12">
+          <h2 class="text-xl font-heading font-semibold mb-5">
+            {lang === 'es' ? 'Capturas' : 'Screenshots'}
+          </h2>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {project.gallery_urls.map((url: string) => (
+              <div class="rounded-xl overflow-hidden border border-neutral-800">
+                <img src={url} alt={project.title} class="w-full object-cover" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+    </div>
+  </main>
+</Layout>
