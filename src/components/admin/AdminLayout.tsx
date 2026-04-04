@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import {
-  LayoutDashboard, Type, FolderOpen, Wrench, Briefcase,
+  LayoutDashboard, Type, UserRound, FolderOpen, Wrench, Briefcase,
   Image, Contact2, FileText, History, LogOut, Eye, Menu, X
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useSupabase';
@@ -14,6 +14,7 @@ interface AdminLayoutProps {
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'hero', label: 'Hero Content', icon: Type },
+  { id: 'about', label: 'About Page', icon: UserRound },
   { id: 'projects', label: 'Projects', icon: FolderOpen },
   { id: 'skills', label: 'Skills & Certs', icon: Wrench },
   { id: 'experience', label: 'Experience', icon: Briefcase },

@@ -1,29 +1,12 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from '../../hooks/useTranslation';
-import type { HeroContent, Experience } from '../../lib/types';
+import type { HeroContent, Experience, AboutContent } from '../../lib/types';
 
 interface AboutPageProps {
   hero: HeroContent | null;
   experience: Experience[] | null;
+  about: AboutContent | null;
 }
-
-const INTERESTS_EN = [
-  { icon: '💻', label: 'Full-Stack Dev' },
-  { icon: '☁️', label: 'Cloud & DevOps' },
-  { icon: '🎮', label: 'Game Dev' },
-  { icon: '📚', label: 'Continuous Learning' },
-  { icon: '🌎', label: 'Open Source' },
-  { icon: '🎵', label: 'Music' },
-];
-
-const INTERESTS_ES = [
-  { icon: '💻', label: 'Desarrollo Full-Stack' },
-  { icon: '☁️', label: 'Cloud & DevOps' },
-  { icon: '🎮', label: 'Desarrollo de Juegos' },
-  { icon: '📚', label: 'Aprendizaje Continuo' },
-  { icon: '🌎', label: 'Open Source' },
-  { icon: '🎵', label: 'Música' },
-];
 
 const TYPE_COLORS: Record<string, string> = {
   work: 'bg-accent/10 border-accent/30 text-accent',
@@ -52,13 +35,16 @@ function formatDate(dateStr: string | null, presentLabel: string): string {
   return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
-export default function AboutPage({ hero, experience }: AboutPageProps) {
+export default function AboutPage({ hero, experience, about }: AboutPageProps) {
   const { lang, t } = useTranslation();
 
   const name = hero?.name ?? 'Michel Encarnación';
   const tagline = lang === 'en' ? (hero?.tagline_en ?? '') : (hero?.tagline_es ?? '');
   const description = lang === 'en' ? (hero?.description_en ?? '') : (hero?.description_es ?? '');
-  const interests = lang === 'en' ? INTERESTS_EN : INTERESTS_ES;
+  const interests = (about?.interests ?? []).map((i) => ({
+    icon: i.icon,
+    label: lang === 'en' ? i.label_en : i.label_es,
+  }));
   const typeLabel = lang === 'en' ? TYPE_LABEL_EN : TYPE_LABEL_ES;
 
   const published = experience?.filter((e) => e.status === 'published') ?? [];
