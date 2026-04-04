@@ -72,14 +72,15 @@ export function useTable<T extends { id: string }>(tableName: string) {
   };
 
   const update = async (id: string, updates: Partial<T>): Promise<T> => {
-    const { data, error } = await supabase
+    const { data: updated, error } = await supabase
       .from(tableName)
       .update(updates)
       .eq('id', id)
       .select()
       .single();
     if (error) throw error;
-    return data as T;
+    setData((prev) => prev.map((item) => item.id === id ? (updated as T) : item));
+    return updated as T;
   };
 
   const remove = async (id: string): Promise<void> => {
