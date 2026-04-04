@@ -56,6 +56,28 @@ const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url.origin);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>{title}</title>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Michel Encarnación",
+      "alternateName": "Michel Encarnación Dionicio",
+      "url": canonicalURL.origin,
+      "image": ogImageURL.href,
+      "jobTitle": "Software Engineering Student & Full-Stack Developer",
+      "description": description,
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universidad Popular Autónoma del Estado de Puebla",
+        "alternateName": "UPAEP"
+      },
+      "knowsAbout": ["React", "TypeScript", "Node.js", "Astro", "Full-Stack Development", "Software Engineering"],
+      "sameAs": [
+        "https://github.com/MichelEncarnacion",
+        "https://www.linkedin.com/in/michelencarnacion"
+      ]
+    })} />
   </head>
   <body class="min-h-screen bg-bg-primary dark:bg-bg-primary-dark text-text-primary dark:text-text-primary-dark transition-colors duration-300">
     <slot />
