@@ -3,6 +3,7 @@ import AuthGuard from './AuthGuard';
 import AdminLayout from './AdminLayout';
 import Dashboard from './Dashboard';
 import HeroEditor from './HeroEditor';
+import AboutEditor from './AboutEditor';
 import ProjectsManager from './ProjectsManager';
 import SkillsManager from './SkillsManager';
 import ExperienceManager from './ExperienceManager';
@@ -14,6 +15,7 @@ import VersionHistory from './VersionHistory';
 const SECTIONS: Record<string, () => JSX.Element> = {
   dashboard: Dashboard,
   hero: HeroEditor,
+  about: AboutEditor,
   projects: ProjectsManager,
   skills: SkillsManager,
   experience: ExperienceManager,

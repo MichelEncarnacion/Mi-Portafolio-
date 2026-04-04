@@ -98,4 +98,16 @@ export interface ContentVersion {
   created_at: string;
 }
 
+export interface Interest {
+  icon: string;
+  label_en: string;
+  label_es: string;
+}
+
+export interface AboutContent {
+  id: string;
+  interests: Interest[];
+  updated_at: string;
+}
+
 export type Lang = 'en' | 'es';

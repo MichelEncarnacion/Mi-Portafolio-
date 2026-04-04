@@ -17,6 +17,11 @@ const { data: experience } = await supabaseServer
   .eq('status', 'published')
   .order('sort_order');
 
+const { data: aboutData } = await supabaseServer
+  .from('about_content')
+  .select('*')
+  .single();
+
 const name = heroData?.name ?? 'Michel Encarnación';
 ---
 
@@ -26,6 +31,6 @@ const name = heroData?.name ?? 'Michel Encarnación';
   ogImage={heroData?.profile_image_url ?? '/og.png'}
 >
   <Navbar client:only="react" />
-  <AboutPage client:only="react" hero={heroData} experience={experience} />
+  <AboutPage client:only="react" hero={heroData} experience={experience} about={aboutData} />
   <Footer client:only="react" />
 </Layout>
