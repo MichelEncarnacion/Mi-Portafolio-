@@ -13,6 +13,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [activeSection, setActiveSection] = useState<string>('hero');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +24,22 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    NAV_ITEMS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -52,9 +69,19 @@ export default function Navbar() {
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
-                className="text-sm font-medium text-text-secondary hover:text-text-primary dark:hover:text-text-primary-dark transition-colors"
+                className={`relative text-sm font-medium transition-colors ${
+                  activeSection === item
+                    ? 'text-accent'
+                    : 'text-text-secondary hover:text-text-primary dark:hover:text-text-primary-dark'
+                }`}
               >
                 {t(`nav.${item}`)}
+                {activeSection === item && (
+                  <motion.span
+                    layoutId="nav-indicator"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent rounded-full"
+                  />
+                )}
               </button>
             ))}
           </div>
@@ -94,7 +121,11 @@ export default function Navbar() {
                 <button
                   key={item}
                   onClick={() => scrollTo(item)}
-                  className="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-text-secondary hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                  className={`block w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                    activeSection === item
+                      ? 'text-accent bg-accent/10'
+                      : 'text-text-secondary hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                  }`}
                 >
                   {t(`nav.${item}`)}
                 </button>
