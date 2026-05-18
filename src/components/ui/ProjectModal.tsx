@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, GitFork } from 'lucide-react';
+import { ExternalLink, GitFork, FileText } from 'lucide-react';
 import type { Project, Lang } from '../../lib/types';
 
 interface ProjectModalProps {
@@ -111,30 +111,34 @@ export default function ProjectModal({ project, lang, onClose }: ProjectModalPro
                 )}
 
                 {/* Links */}
-                {(project.project_url || project.repo_url) && (
-                  <div className="flex gap-3 pt-4 border-t border-neutral-800">
-                    {project.project_url && (
-                      <a
-                        href={project.project_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/10 border border-accent/30 text-accent text-xs hover:bg-accent/20 transition-colors"
-                      >
-                        <ExternalLink size={12} /> ./demo
-                      </a>
-                    )}
-                    {project.repo_url && (
-                      <a
-                        href={project.repo_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/10 border border-accent/30 text-accent text-xs hover:bg-accent/20 transition-colors"
-                      >
-                        <GitFork size={12} /> ./repo
-                      </a>
-                    )}
-                  </div>
-                )}
+                <div className="flex flex-wrap gap-3 pt-4 border-t border-neutral-800">
+                  <a
+                    href={`/projects/${project.slug}`}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-300 text-xs hover:bg-neutral-700 transition-colors"
+                  >
+                    <FileText size={12} /> ./details
+                  </a>
+                  {project.project_url && (
+                    <a
+                      href={project.project_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/10 border border-accent/30 text-accent text-xs hover:bg-accent/20 transition-colors"
+                    >
+                      <ExternalLink size={12} /> ./demo
+                    </a>
+                  )}
+                  {project.repo_url && (
+                    <a
+                      href={project.repo_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/10 border border-accent/30 text-accent text-xs hover:bg-accent/20 transition-colors"
+                    >
+                      <GitFork size={12} /> ./repo
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </motion.div>

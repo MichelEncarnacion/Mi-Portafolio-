@@ -19,7 +19,7 @@ export default function ProjectCard({ project, lang, index, onClick }: ProjectCa
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: (index % 3) * 0.1 }}
-      onClick={() => window.location.href = `/projects/${project.slug}`}
+      onClick={() => onClick(project)}
       className="group cursor-pointer rounded-2xl border border-neutral-800 bg-neutral-900 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_0_24px_#4ade8022]"
     >
       {/* Image */}
