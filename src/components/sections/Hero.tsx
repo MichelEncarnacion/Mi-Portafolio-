@@ -151,6 +151,10 @@ export default function Hero({ data }: HeroProps) {
                   <img
                     src={data.profile_image_url}
                     alt={name}
+                    width={288}
+                    height={288}
+                    fetchpriority="high"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 ) : (

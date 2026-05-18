@@ -28,8 +28,11 @@ export default function ProjectCard({ project, lang, index, onClick }: ProjectCa
           <img
             src={project.image_url}
             alt={project.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            width={800}
+            height={450}
             loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">

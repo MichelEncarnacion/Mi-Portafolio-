@@ -86,6 +86,10 @@ export default function ProjectModal({ project, lang, onClose }: ProjectModalPro
                     <img
                       src={project.image_url}
                       alt={title}
+                      width={672}
+                      height={192}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full object-cover max-h-48"
                     />
                   </div>
