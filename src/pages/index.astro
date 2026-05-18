@@ -50,10 +50,12 @@ const { data: contactInfo } = await supabaseServer
 <Layout>
   <ScrollProgress client:only="react" />
   <Navbar client:only="react" />
-  <Hero client:only="react" data={heroData} />
-  <Projects client:visible data={projects} />
-  <Skills client:visible skills={skills} certifications={certifications} />
-  <Experience client:visible data={experience} />
-  <Contact client:visible contactInfo={contactInfo} />
+  <main id="main-content">
+    <Hero client:only="react" data={heroData} />
+    <Projects client:visible data={projects} />
+    <Skills client:visible skills={skills} certifications={certifications} />
+    <Experience client:visible data={experience} />
+    <Contact client:visible contactInfo={contactInfo} />
+  </main>
   <Footer client:only="react" />
 </Layout>

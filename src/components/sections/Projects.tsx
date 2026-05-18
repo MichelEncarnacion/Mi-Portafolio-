@@ -40,9 +40,10 @@ export default function Projects({ data }: ProjectsProps) {
         </ScrollReveal>
 
         {/* Filter chips */}
-        <ScrollReveal className="flex flex-wrap gap-2 justify-center mb-10">
+        <ScrollReveal className="flex flex-wrap gap-2 justify-center mb-10" role="group" aria-label="Filter projects by tag">
           <button
             onClick={() => setActiveTag(null)}
+            aria-pressed={activeTag === null}
             className={`px-4 py-1.5 rounded-full text-sm font-mono transition-all duration-200 border ${
               activeTag === null
                 ? 'bg-accent text-black border-accent font-semibold'
@@ -55,6 +56,7 @@ export default function Projects({ data }: ProjectsProps) {
             <button
               key={tag}
               onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+              aria-pressed={activeTag === tag}
               className={`px-4 py-1.5 rounded-full text-sm font-mono transition-all duration-200 border ${
                 activeTag === tag
                   ? 'bg-accent text-black border-accent font-semibold'

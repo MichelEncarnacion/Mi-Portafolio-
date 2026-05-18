@@ -93,6 +93,12 @@ const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url.origin);
     })} />
   </head>
   <body class="min-h-screen bg-bg-primary dark:bg-bg-primary-dark text-text-primary dark:text-text-primary-dark transition-colors duration-300">
+    <a
+      href="#main-content"
+      class="absolute -top-full left-4 z-[9999] px-4 py-2 rounded-b-lg bg-accent text-black font-semibold text-sm focus:top-0 transition-all duration-200"
+    >
+      Skip to content
+    </a>
     <slot />
     <Analytics />
   </body>
