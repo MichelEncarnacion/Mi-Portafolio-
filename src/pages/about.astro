@@ -31,6 +31,8 @@ const name = heroData?.name ?? 'Michel Encarnación';
   ogImage={heroData?.profile_image_url ?? '/og.png'}
 >
   <Navbar client:only="react" />
-  <AboutPage client:only="react" hero={heroData} experience={experience} about={aboutData} />
+  <main id="main-content">
+    <AboutPage client:only="react" hero={heroData} experience={experience} about={aboutData} />
+  </main>
   <Footer client:only="react" />
 </Layout>

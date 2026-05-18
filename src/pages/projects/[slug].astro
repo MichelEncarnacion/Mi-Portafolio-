@@ -31,10 +31,10 @@ const endDate = project.end_date
 <Layout
   title={`${project.title} — Michel Encarnación`}
   description={shortDesc}
-  ogImage={project.image_url ?? '/og.png'}
+  ogImage={`/og/${slug}.png`}
   keywords={`${project.title}, ${project.tags.join(', ')}, Michel Encarnación, portfolio`}
 >
-  <main class="min-h-screen bg-bg-primary dark:bg-bg-primary-dark text-text-primary dark:text-text-primary-dark">
+  <main id="main-content" class="min-h-screen bg-bg-primary dark:bg-bg-primary-dark text-text-primary dark:text-text-primary-dark">
 
     <!-- Back button -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4">
