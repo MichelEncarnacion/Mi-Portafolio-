@@ -37,7 +37,8 @@
     "message": "Message",
     "send": "Send Message",
     "success": "Message sent successfully!",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "send_another": "Send another message"
   },
   "footer": {
     "rights": "All rights reserved.",

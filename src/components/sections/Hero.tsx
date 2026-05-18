@@ -1,7 +1,7 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ArrowDown, Download, FolderOpen } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { HeroContent } from '../../lib/types';
 
 function useTypewriter(text: string, speed = 50, startDelay = 0) {
@@ -41,6 +41,8 @@ export default function Hero({ data }: HeroProps) {
   const { scrollY } = useScroll();
   const bgY = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const imageRef = useRef(null);
+  const isImageInView = useInView(imageRef, { amount: 0.1 });
 
   const greeting = lang === 'en' ? (data?.greeting_en ?? 'Hi, I\'m') : (data?.greeting_es ?? 'Hola, soy');
   const tagline = lang === 'en' ? (data?.tagline_en ?? 'Software Engineering Student & Full-Stack Developer') : (data?.tagline_es ?? 'Estudiante de Ingeniería de Software & Desarrollador Full-Stack');
@@ -139,9 +141,9 @@ export default function Hero({ data }: HeroProps) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex items-center justify-center w-full"
           >
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex-shrink-0">
+            <div ref={imageRef} className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex-shrink-0">
               <motion.div
-                animate={{ rotate: 360 }}
+                animate={isImageInView ? { rotate: 360 } : false}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                 className="absolute inset-0 rounded-full border-2 border-dashed border-accent/30"
               />

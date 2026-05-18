@@ -37,7 +37,8 @@
     "message": "Mensaje",
     "send": "Enviar Mensaje",
     "success": "¡Mensaje enviado exitosamente!",
-    "error": "Algo salió mal. Intenta de nuevo."
+    "error": "Algo salió mal. Intenta de nuevo.",
+    "send_another": "Enviar otro mensaje"
   },
   "footer": {
     "rights": "Todos los derechos reservados.",

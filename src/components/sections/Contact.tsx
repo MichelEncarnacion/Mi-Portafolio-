@@ -17,7 +17,8 @@ export default function Contact({ contactInfo }: ContactProps) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('sending');
-    const data = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const data = new FormData(form);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -28,7 +29,12 @@ export default function Contact({ contactInfo }: ContactProps) {
           message: data.get('message'),
         }),
       });
-      setStatus(res.ok ? 'success' : 'error');
+      if (res.ok) {
+        form.reset();
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
     } catch {
       setStatus('error');
     }
@@ -64,6 +70,12 @@ export default function Contact({ contactInfo }: ContactProps) {
               >
                 <CheckCircle size={48} className="text-green-500" />
                 <p className="text-lg font-medium">{t('contact.success')}</p>
+                <button
+                  onClick={() => setStatus('idle')}
+                  className="text-sm text-text-secondary hover:text-accent transition-colors underline underline-offset-2"
+                >
+                  {t('contact.send_another') ?? 'Send another message'}
+                </button>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">

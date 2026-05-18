@@ -57,19 +57,25 @@ export default function ProjectForm({ projectId, onBack }: ProjectFormProps) {
     },
   });
 
+  const [loadedProject, setLoadedProject] = useState<Project | null>(null);
+
   useEffect(() => {
-    if (projectId) {
-      fetchAll('sort_order').then((all) => {
-        const found = all.find((p) => p.id === projectId);
-        if (found) {
-          setProject(found);
-          setInProgress(!found.end_date);
-          editorEn?.commands.setContent(found.long_description_en || '');
-          editorEs?.commands.setContent(found.long_description_es || '');
-        }
-      }).catch(console.error);
-    }
+    if (!projectId) return;
+    fetchAll('sort_order').then((all) => {
+      const found = all.find((p) => p.id === projectId);
+      if (found) {
+        setProject(found);
+        setInProgress(!found.end_date);
+        setLoadedProject(found);
+      }
+    }).catch(console.error);
   }, [projectId]);
+
+  useEffect(() => {
+    if (!loadedProject) return;
+    editorEn?.commands.setContent(loadedProject.long_description_en || '');
+    editorEs?.commands.setContent(loadedProject.long_description_es || '');
+  }, [loadedProject, editorEn, editorEs]);
 
   const handleSave = async () => {
     setSaving(true);
